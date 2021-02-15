@@ -53,7 +53,7 @@ import tensorflow as tf
 deviceName = tf.test.gpu_device_name()
 if deviceName != "/device:GPU:0":
   print(f"GPU not found!")
-print(f"Found GPU: {device_name}")
+print(f"Found GPU: {deviceName}")
 
 """### Read Data -"""
 
@@ -98,7 +98,7 @@ model = Sequential()
 
 model.add(Embedding(100000, 12, input_length=100))
 model.add(LSTM(128))
-model.add(Dense(30, activation='relu'))
+model.add(Dense(64, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
 
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
