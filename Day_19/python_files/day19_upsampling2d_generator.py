@@ -18,9 +18,11 @@ import numpy as np
 from PIL import Image
 import IPython.display
 
+"""### Define the model -"""
+
 # define model
 model = Sequential()
-# define input shape, output enough activations for for 128 5x5 image
+# define input shape, output enough activations for 128 5x5 image
 model.add(Dense(128 * 5 * 5, input_dim=100))
 # reshape vector of activations into 128 feature maps with 5x5
 model.add(Reshape((5, 5, 128)))
@@ -31,11 +33,17 @@ model.add(Conv2D(1, (3,3), padding='same'))
 model.summary()
 
 """### Generate a random image using CNN output -
-This isn't part of the guide, but I was just curious to see how the generated image would look, so I used a random input value and scaled the image to 100x100 to visualize it.
+This isn't part of the guide, but I was just curious to see how the generated image would look, so I used a random input value and scaled the image to visualize it.
 """
 
-output = model.predict(np.random.rand(3,100)).reshape(3,100)
-print(output.shape)
-generated_image = Image.fromarray(output, mode='RGB')
-scaled_image = generated_image.resize((200, 200))
-IPython.display.display(scaled_image)
+random_data = np.random.rand(1, 100)
+print(f"Input data:\n{random_data}")
+
+output = model.predict(random_data)
+print(f"Output data:\n{output.reshape(1, 100)}")
+reshaped_output = output.reshape(1, 10, 10)
+
+generated_image = Image.fromarray(reshaped_output, mode='RGB')
+generated_image = generated_image.resize((100, 100))
+print(f"\nGenerated Image: {reshaped_output.shape} => 100x100")
+IPython.display.display(generated_image)

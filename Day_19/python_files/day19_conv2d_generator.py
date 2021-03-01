@@ -43,8 +43,14 @@ model.summary()
 This isn't part of the guide, but I was just curious to see how the generated image would look, so I used a random input value and scaled the image to 100x100 to visualize it.
 """
 
-output = model.predict(np.random.rand(3,100)).reshape(3,100)
-print(output.shape)
-generated_image = Image.fromarray(output, mode='RGB')
-scaled_image = generated_image.resize((200, 200))
-IPython.display.display(scaled_image)
+random_data = np.random.rand(1, 100)
+print(f"Input data:\n{random_data}")
+
+output = model.predict(random_data)
+print(f"Output data:\n{output.reshape(1, 100)}")
+reshaped_output = output.reshape(1, 10, 10)
+
+generated_image = Image.fromarray(reshaped_output, mode='RGB')
+generated_image = generated_image.resize((100, 100))
+print(f"\nGenerated Image: {reshaped_output.shape} => 100x100")
+IPython.display.display(generated_image)
